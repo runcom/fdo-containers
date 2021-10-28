@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  manufacturing-server:
+    image: "localhost/fdo-manufacturing-server:latest"
+    ports:
+      - "0.0.0.0:8080:8080"
+    volumes:
+      - ./keys:/etc/fdo/keys
+      - ./ownership_vouchers:/etc/fdo/ownership_vouchers
+      - ./config/rendezvous-info.yml:/etc/fdo/rendezvous-info.yml
+  rendezvous-server:
+    image: "localhost/fdo-rendezvous-server:latest"
+    ports:
+      - "0.0.0.0:8082:8082"
+    volumes:
+      - ./keys:/etc/fdo/keys
+      - ./ownership_vouchers:/etc/fdo/ownership_vouchers
+      - ./rendezvous_registered:/etc/fdo/rendezvous_registered
+  owner-onboarding-server:
+    image: "localhost/fdo-owner-onboarding-server:latest"
+    ports:
+      - "0.0.0.0:8081:8081"
+    volumes:
+      - ./keys:/etc/fdo/keys
+      - ./ownership_vouchers:/etc/fdo/ownership_vouchers
+      - ./config/service-info.yml:/etc/fdo/owner-onboarding-server.conf.d

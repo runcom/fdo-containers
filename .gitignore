@@ -1,0 +1,6 @@
+keys/*.der
+keys/*.pem
+ownership_vouchers/*
+!ownership_vouchers/.keep
+rendezvous_registered/*
+!rendezvous_registered/.keep

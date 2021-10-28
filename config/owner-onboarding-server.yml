@@ -1,0 +1,8 @@
+---
+session_store_driver: Directory
+session_store_config: /etc/fdo/sessions/
+ownership_voucher_store_driver: Directory
+ownership_voucher_store_config: /etc/fdo/keys/ownership_vouchers/
+trusted_device_keys_path: /etc/fdo/keys/device_ca_cert.pem
+owner_private_key_path: /etc/fdo/keys/owner_key.der
+bind: 0.0.0.0:8081
