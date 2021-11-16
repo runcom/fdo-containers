@@ -1,8 +1,7 @@
 FROM centos AS fdo-base
 
 RUN yum update -y && yum install -y cargo git-core openssl-devel
-RUN git clone https://github.com/runcom/fido-device-onboard-rs.git
-RUN cd fido-device-onboard-rs && git checkout --track origin/rpm-spec && cargo build --release
+RUN git clone https://github.com/runcom/fido-device-onboard-rs.git && cd fido-device-onboard-rs && git checkout --track origin/rpm-spec && cargo build --release
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal AS fdo-manufacturing-server
 COPY --from=fdo-base /fido-device-onboard-rs/target/release/fdo-manufacturing-server /usr/local/bin
@@ -25,5 +24,6 @@ COPY --from=fdo-base /fido-device-onboard-rs/target/release/fdo-owner-onboarding
 RUN mkdir -p /etc/fdo/sessions
 RUN mkdir -p /etc/fdo/owner-onboarding-server.conf.d
 ADD config/owner-onboarding-server.yml /etc/fdo/owner-onboarding-server.yml
+ADD config/owner-addresses.yml /etc/fdo/owner-addresses.yml
 ENV LOG_LEVEL=trace
 CMD ["fdo-owner-onboarding-server"]
