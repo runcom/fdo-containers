@@ -2,4 +2,4 @@
 - transport: HTTP
   port: 8081
   addresses:
-    - dns_name: localhost
+    - ip_address: 192.168.100.1
