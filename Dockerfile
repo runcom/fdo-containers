@@ -1,7 +1,7 @@
 FROM centos AS fdo-base
 
 RUN yum update -y && yum install -y cargo git-core openssl-devel
-RUN git clone https://github.com/runcom/fido-device-onboard-rs.git && cd fido-device-onboard-rs && git checkout --track origin/rpm-spec && cargo build --release
+RUN git clone https://github.com/fedora-iot/fido-device-onboard-rs.git && cd fido-device-onboard-rs && cargo build --release
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal AS fdo-manufacturing-server
 COPY --from=fdo-base /fido-device-onboard-rs/target/release/fdo-manufacturing-server /usr/local/bin
