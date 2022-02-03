@@ -26,5 +26,5 @@ RUN mkdir -p /etc/fdo/owner-onboarding-server.conf.d
 ADD config/owner-onboarding-server.yml /etc/fdo/owner-onboarding-server.yml
 ADD config/owner-addresses.yml /etc/fdo/owner-addresses.yml
 ENV LOG_LEVEL=trace
-ENV ALLOW_NONINTEROPABLE_KDF=1
+ENV ALLOW_NONINTEROPERABLE_KDF=1
 CMD ["fdo-owner-onboarding-server"]
