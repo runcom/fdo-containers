@@ -18,7 +18,6 @@ sudo podman run --init \
   -p 0.0.0.0:8081:8081 \
   localhost/fdo-owner-onboarding-server
 sudo podman run --init \
-  -v $PWD/ownership_vouchers:/etc/fdo/ownership_vouchers \
   -v $PWD/keys:/etc/fdo/keys \
   -v $PWD/config/rendezvous-server.yml:/etc/fdo/rendezvous-server.yml \
   -v $PWD/rendezvous_registered:/etc/fdo/rendezvous_registered \
