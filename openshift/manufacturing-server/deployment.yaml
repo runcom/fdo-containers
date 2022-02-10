@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fdo-manufacturing-server
+  labels:
+    app: fdo-manufacturing-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fdo-manufacturing-server
+  template:
+    metadata:
+      labels:
+        app: fdo-manufacturing-server
+    spec:
+      containers:
+      - name: fdo-manufacturing-server
+        image: fdo-manufacturing-server
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - mountPath: /etc/fdo   # possible conflict as we mount other things on top
+            name: fdo-configs
+          - mountPath: /etc/fdo/ownership_vouchers
+            name: ownership-vouchers 
+          - mountPath: /etc/fdo/keys
+            name: fdo-keys
+          - mountPath: /etc/fdo/sessions
+            name: manufacturing-sessions
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "1000m"
+      volumes:
+        - name: ownership-vouchers
+          persistentVolumeClaim:
+            claimName: manufacturing-ownership-vouchers
+        - name: manufacturing-sessions
+          persistentVolumeClaim:
+            claimName: manufacturing-sessions
+        - name: fdo-configs
+          configMap:
+            name: manufacturing-config
+            #items:   # we can cherry pick items here
+            #  - 
+        - name: fdo-keys
+          secret:
+            secretName: manufacturing-secrets
+

@@ -1,0 +1,37 @@
+commonLabels:
+   app: onboarding-server
+
+configMapGenerator:
+  - name: onboarding-configs
+    options:
+      disableNameSuffixHash: true
+    files:
+     - config/owner-addresses.yml
+     - config/owner-onboarding-server.yml
+
+  - name: onboard-files
+    options:
+      disableNameSuffixHash: true
+    files:
+     - onboarding-files/run_something.sh
+    
+secretGenerator:
+  - name: onboarding-secrets
+    options:
+      disableNameSuffixHash: true
+    files:
+      - secrets/device_ca_cert.pem
+      - secrets/owner_cert.pem
+      - secrets/owner_key.der
+
+resources:
+  - pvc-ownership-vouchers.yaml
+  - pvc-sessions.yaml
+  - route.yaml
+  - service.yaml
+  - deployment.yaml
+
+images:
+  - name: fdo-owner-onboarding-server
+    newName: quay.io/runcom/fdo-owner-onboarding-server
+    newTag: 0.3.0

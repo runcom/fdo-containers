@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fdo-owner-onboarding-server
+  labels:
+    app: fdo-owner-onboarding-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fdo-owner-onboarding-server
+  template:
+    metadata:
+      labels:
+        app: fdo-owner-onboarding-server
+    spec:
+      containers:
+      - name: fdo-owner-onboarding-server
+        image: fdo-owner-onboarding-server
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+          - mountPath: /etc/fdo   # possible conflict as we mount other things on top
+            name: fdo-configs
+          - mountPath: /etc/fdo/ownership_vouchers
+            name: ownership-vouchers 
+          - mountPath: /etc/fdo/keys
+            name: fdo-keys
+          - mountPath: /etc/fdo/sessions
+            name: owner-onboarding-sessions
+          - mountPath: /files
+            name: onboard-files
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "1000m"
+      volumes:
+        - name: ownership-vouchers
+          persistentVolumeClaim:
+            claimName: manufacturing-ownership-vouchers
+        - name: owner-onboarding-sessions
+          persistentVolumeClaim:
+            claimName: owner-onboarding-sessions
+        - name: onboard-files
+          configMap:
+            name: onboard-files
+        - name: fdo-configs
+          configMap:
+            name: onboarding-configs
+            #items:   # we can cherry pick items here
+            #  - 
+        - name: fdo-keys
+          secret:
+            secretName: onboarding-secrets
+

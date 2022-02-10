@@ -1,0 +1,5 @@
+---
+- transport: HTTP
+  port: 80
+  addresses:
+    - dns_name: fido-owner-onboarding.ajo.es

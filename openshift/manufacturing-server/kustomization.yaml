@@ -1,0 +1,35 @@
+commonLabels:
+   app: manufacturing-server
+
+configMapGenerator:
+  - name: manufacturing-config
+    options:
+      disableNameSuffixHash: true
+    files:
+     - config/manufacturing-server.yml
+     - config/rendezvous-info.yml
+  
+secretGenerator:
+  - name: manufacturing-secrets
+    options:
+      disableNameSuffixHash: true
+    files:
+      - secrets/device_ca_cert.pem
+      - secrets/device_ca_key.der
+      - secrets/diun_key.der
+      - secrets/diun_cert.pem
+      - secrets/manufacturer_cert.pem
+      - secrets/manufacturer_key.der
+      - secrets/owner_cert.pem
+
+resources:
+  - pvc-ownership-vouchers.yaml
+  - pvc-sessions.yaml
+  - route.yaml
+  - service.yaml
+  - deployment.yaml
+
+images:
+  - name: fdo-manufacturing-server
+    newName: quay.io/runcom/fdo-manufacturing-server
+    newTag: 0.3.0

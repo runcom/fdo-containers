@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fdo-rendezvous-server
+  labels:
+    app: fdo-rendezvous-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fdo-rendezvous-server
+  template:
+    metadata:
+      labels:
+        app: fdo-rendezvous-server
+    spec:
+      containers:
+      - name: fdo-rendezvous-server
+        image: fdo-rendezvous-server
+        ports:
+        - containerPort: 8082
+        volumeMounts:
+          - mountPath: /etc/fdo   # possible conflict as we mount other things on top
+            name: fdo-configs
+          - mountPath: /etc/fdo/rendezvous_registered
+            name: rendezvous-registered
+          - mountPath: /etc/fdo/keys
+            name: fdo-keys
+          - mountPath: /etc/fdo/sessions
+            name: rendezvous-sessions
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "2000m"
+          requests:
+            memory: "512Mi"
+            cpu: "1000m"
+      volumes:
+        - name: rendezvous-sessions
+          persistentVolumeClaim:
+            claimName: rendezvous-sessions
+        - name: rendezvous-registered 
+          persistentVolumeClaim:
+            claimName: rendezvous-registered 
+        - name: fdo-configs
+          configMap:
+            name: rendezvous-config
+        - name: fdo-keys
+          secret:
+            secretName: rendezvous-secrets
+

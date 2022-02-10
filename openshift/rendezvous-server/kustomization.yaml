@@ -1,0 +1,29 @@
+commonLabels:
+   app: rendezvous-server
+
+configMapGenerator:
+  - name: rendezvous-config
+    options:
+      disableNameSuffixHash: true
+    files:
+     - config/rendezvous-server.yml
+  
+secretGenerator:
+  - name: rendezvous-secrets
+    options:
+      disableNameSuffixHash: true
+    files:
+      - secrets/manufacturer_cert.pem
+
+
+resources:
+  - pvc-registered.yaml
+  - pvc-sessions.yaml
+  - route.yaml
+  - service.yaml
+  - deployment.yaml
+
+images:
+  - name: fdo-rendezvous-server
+    newName: quay.io/runcom/fdo-rendezvous-server
+    newTag: 0.3.0
