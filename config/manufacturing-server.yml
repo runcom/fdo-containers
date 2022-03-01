@@ -1,10 +1,14 @@
 ---
 session_store_driver: Directory
-session_store_config: /etc/fdo/sessions
+session_store_config: /etc/fdo/sessions/
 ownership_voucher_store_driver: Directory
 ownership_voucher_store_config: /etc/fdo/ownership_vouchers/
 bind: 0.0.0.0:8080
-rendezvous_info_path: /etc/fdo/rendezvous-info.yml
+rendezvous_info:
+- ip: 192.168.1.140
+  device_port: 8082
+  owner_port: 8082
+  protocol: http
 protocols:
   diun:
     key_path: /etc/fdo/keys/diun_key.der

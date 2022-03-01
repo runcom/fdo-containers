@@ -1,5 +1,6 @@
 keys/*.der
 keys/*.pem
+keys/diun_pub_key_hash
 ownership_vouchers/*
 !ownership_vouchers/.keep
 rendezvous_registered/*
