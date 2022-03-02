@@ -13,6 +13,10 @@ owner_addresses:
     - ip_address: 192.168.1.140
 report_to_rendezvous_endpoint_enabled: false
 bind: 0.0.0.0:8081
+service_info_api_url: "http://localhost:8089/device_info"
+service_info_api_authentication:
+  BearerToken:
+    token: TestAuthToken
 service_info:
   sshkey_user: admin
   sshkey_key: "testkey"

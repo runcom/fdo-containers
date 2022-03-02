@@ -17,6 +17,7 @@ directory = "vendor"' >> .cargo/config.toml && \
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal AS fdo-manufacturing-server
 COPY --from=fdo-base /fido-device-onboard-rs/target/release/fdo-manufacturing-server /usr/local/bin
+RUN microdnf install tpm2-tss
 RUN mkdir -p /etc/fdo/sessions
 RUN mkdir -p /etc/fdo/manufacturing-server.conf.d
 ENV LOG_LEVEL=trace
@@ -24,6 +25,7 @@ ENTRYPOINT ["fdo-manufacturing-server"]
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal AS fdo-owner-onboarding-server
 COPY --from=fdo-base /fido-device-onboard-rs/target/release/fdo-owner-onboarding-server /usr/local/bin
+RUN microdnf install tpm2-tss
 RUN mkdir -p /etc/fdo/sessions
 RUN mkdir -p /etc/fdo/owner-onboarding-server.conf.d
 ENV LOG_LEVEL=trace
@@ -32,6 +34,7 @@ ENTRYPOINT ["fdo-owner-onboarding-server"]
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal AS fdo-rendezvous-server
 COPY --from=fdo-base /fido-device-onboard-rs/target/release/fdo-rendezvous-server /usr/local/bin
+RUN microdnf install tpm2-tss
 RUN mkdir -p /etc/fdo/sessions
 RUN mkdir -p /etc/fdo/rendezvous-server.conf.d
 ENV LOG_LEVEL=trace
