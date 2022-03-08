@@ -1,0 +1,3 @@
+fido-manufacturer         60 IN A      10.19.111.203
+fido-owner-onboarding     60 IN A      10.19.111.203
+fido-rendezvous           60 IN A      10.19.111.203
